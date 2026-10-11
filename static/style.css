@@ -1,855 +1,581 @@
-/* static/style.css - Meeting Assistant Modern Theme */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-html, body, .stApp, [data-testid="stAppViewContainer"], 
-[data-testid="stMain"], .main, .block-container {
-    background-color: #ffffff !important;
+/* ==========================================================================
+   Meeting Assistant - skupni stil (svetel, minimalističen)
+   Vse barve in razdalje so na enem mestu (:root). Ostale datoteke
+   uporabljajo samo CSS razrede iz te datoteke, ne vgrajenih <style> blokov.
+   ========================================================================== */
+
+:root {
+    --bg: #ffffff;
+    --bg-subtle: #f8fafc;
+    --border: #e5e7eb;
+    --border-strong: #d1d5db;
+
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --text-faint: #94a3b8;
+
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-soft: #eff6ff;
+    --accent-border: #dbeafe;
+
+    --danger: #dc2626;
+    --danger-soft: #fef2f2;
+
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --footer-h: 4.5rem;
+
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Popolnoma skrij vse Streamlitove gumbe in headere */
-.stAppDeployButton, 
-.stToolbar, 
-.stMainBlockHeader,
+/* ---------- Osnova ---------- */
+html, body, .stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"] {
+    background: var(--bg) !important;
+    color: var(--text);
+    font-family: var(--font);
+    color-scheme: light;
+}
+
+.stApp p, .stApp li, .stApp label,
+[data-testid="stWidgetLabel"] p,
+[data-testid="stMarkdownContainer"] {
+    font-family: var(--font);
+    color: var(--text);
+}
+
+/* Skrij Streamlitov header, meni in footer */
 [data-testid="stHeader"],
 [data-testid="stToolbar"],
 [data-testid="stDecoration"],
 [data-testid="stStatusWidget"],
-[data-testid="stSidebarCollapseButton"],
-button[data-testid="baseButton-header"],
-button[kind="header"],
-button[aria-label="Menu"] {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    height: 0 !important;
-    width: 0 !important;
-    overflow: hidden !important;
-}
-
-/* Odstrani ves padding na vrhu */
-.main .block-container {
-    padding-top: 0 !important;
-}
-
-/* Sidebar naj bo čisto na vrhu */
-[data-testid="stSidebar"] {
-    top: 0 !important;
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-}
-
-/* Glavna vsebina */
-.stApp {
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-}
-
-/* Skrij footer v sidebarju */
-[data-testid="stSidebar"] .st-emotion-cache-1v3caue {
+.stAppDeployButton,
+#MainMenu,
+footer {
     display: none !important;
 }
 
-/* Odstrani Streamlitov default padding in margin */
-.stApp {
-    margin-top: -2rem !important;
-    padding-top: 0 !important;
-}
-
-.stApp > header {
-    background: transparent !important;
-}
-
-.stApp > header:first-child {
-    display: none !important;
-}
-
+/* Glavni del (header + vsebina) zapolni celoten zaslon.
+   Footer je pozicioniran na dnu kontejnerja, ki je za višino footerja
+   višji od zaslona - viden je šele, ko se pomakneš navzdol. */
 .block-container {
-    padding-top: 1rem !important;
-    padding-bottom: 2rem !important;
-    max-width: 1440px !important;
-}
-
-.stMarkdown, .stElementContainer, .st-emotion-cache-1r6slb0 {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-
-* {
-    margin: 0;
-    padding: 0;
+    position: relative;
     box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: #f8fafc;
-    color: #0f172a;
-    line-height: 1.5;
-    font-weight: 400;
-    font-size: 16px;
-}
-
-/* Background gradient */
-.bg-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.05) 0%, rgba(0, 0, 0, 0) 50%),
-                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.03) 0%, rgba(0, 0, 0, 0) 50%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Modern Buttons */
-.stButton > button {
-    background: #1e293b;
-    color: white;
-    border: none;
-    padding: 8px 24px;
-    border-radius: 40px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.stButton > button:hover {
-    background: #0f172a;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-/* Professional Cards */
-.card-modern {
-    background: white;
-    border-radius: 24px;
-    padding: 1.5rem;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
-    height: 100%;
-}
-
-.card-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* Stats Cards */
-.stat-card-modern {
-    background: white;
-    border-radius: 20px;
-    padding: 1.25rem;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
-}
-
-.stat-card-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.stat-card-modern i {
-    font-size: 2rem;
-    color: #2563eb;
-    margin-bottom: 0.5rem;
-}
-
-.stat-number-modern {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #0f172a;
-}
-
-.stat-label-modern {
-    font-size: 0.75rem;
-    color: #64748b;
-    margin-top: 0.25rem;
-}
-
-/* Hero Header */
-.hero-header-modern {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    border-radius: 28px;
-    padding: 2.5rem;
-    margin-bottom: 2rem;
-    color: white;
-}
-
-.hero-header-modern h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.hero-header-modern p {
-    color: #94a3b8;
-}
-
-/* Feature Cards */
-.feature-card-modern {
-    background: white;
-    border-radius: 20px;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
-}
-
-.feature-card-modern:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-}
-
-.feature-card-modern .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.75rem;
-}
-
-.feature-card-modern h4 {
-    margin: 0.5rem 0;
-    color: #1e293b;
-    font-weight: 600;
-}
-
-.feature-card-modern p {
-    color: #64748b;
-    font-size: 0.875rem;
-}
-
-/* Info Box */
-.info-box-modern {
-    background: #f8fafc;
-    border-radius: 16px;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-}
-
-/* Tables */
-.table-modern {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid #e2e8f0;
-}
-
-.table-modern th {
-    text-align: left;
-    padding: 1rem;
-    background: #f8fafc;
-    font-weight: 600;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    color: #64748b;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.table-modern td {
-    padding: 1rem;
-    border-bottom: 1px solid #f1f5f9;
-    font-size: 0.875rem;
-    color: #334155;
-}
-
-.table-modern tr:hover {
-    background: #fef2f2;
-}
-
-/* Form Elements */
-.form-input-modern {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    font-size: 0.875rem;
-    font-family: inherit;
-    transition: all 0.2s ease;
-}
-
-.form-input-modern:focus {
-    outline: none;
-    border-color: #1e293b;
-    box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.1);
-}
-
-/* Status Badges */
-.status-badge-modern {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-/* Footer */
-.footer-modern {
-    background: white;
-    border-top: 1px solid #e2e8f0;
-    padding: 2rem 0 1.5rem;
-    margin-top: 3rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .hero-header-modern {
-        padding: 1.5rem;
-    }
-    
-    .hero-header-modern h1 {
-        font-size: 1.5rem;
-    }
-    
-    .stat-number-modern {
-        font-size: 1.25rem;
-    }
-}
-
-.footer-modern {
-    background: white;
-    border-top: 1px solid #e2e8f0;
-    padding: 2rem 0 1.5rem;
-    margin-top: 3rem;
-    width: 100%;
-}
-
-.footer-modern a {
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.footer-modern a:hover {
-    color: #2563eb !important;
-}
-
-@media (max-width: 768px) {
-    .footer-modern {
-        padding: 1.5rem 0 1rem;
-        margin-top: 2rem;
-    }
-}
-
-/* ============ HEADER STYLES ============ */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e2e8f0;
-    margin-bottom: 1rem;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-}
-
-.logo-icon {
-    width: 45px;
-    height: 45px;
-    background: #1e293b;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo-icon i {
-    font-size: 1.5rem;
-    color: #60a5fa;
-}
-
-.logo-text {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #0f172a;
-}
-
-.logo-text span {
-    color: #2563eb;
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-}
-
-.btn-ghost-header {
-    padding: 8px 20px;
-    border-radius: 40px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    border: 1px solid #cbd5e1;
-    background: transparent;
-    color: #334155;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-ghost-header:hover {
-    background: #eff6ff;
-    border-color: #93c5fd;
-}
-
-.btn-primary-header {
-    background: #1e293b;
-    color: white;
-    border: none;
-    padding: 8px 24px;
-    border-radius: 40px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-primary-header:hover {
-    background: #0f172a;
-    transform: translateY(-1px);
-}
-
-/* ============ CARD STYLES ============ */
-.panel, .card-modern {
-    background: white;
-    border-radius: 24px;
-    padding: 1.5rem;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
-}
-
-.panel:hover, .card-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* ============ STATS CARDS ============ */
-.stat-card-modern {
-    background: white;
-    border-radius: 20px;
-    padding: 1.25rem;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
-}
-
-.stat-card-modern:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-.stat-card-modern i {
-    font-size: 2rem;
-    color: #2563eb;
-    margin-bottom: 0.5rem;
-}
-
-.stat-number-modern {
-    font-size: 1.75rem;
-    font-weight: 800;
-    color: #0f172a;
-}
-
-.stat-label-modern {
-    font-size: 0.75rem;
-    color: #64748b;
-    margin-top: 0.25rem;
-}
-
-/* ============ FEATURE CARDS ============ */
-.feature-card-modern {
-    background: white;
-    border-radius: 20px;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-    transition: all 0.2s ease;
-}
-
-.feature-card-modern:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-}
-
-.feature-card-modern .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 0.75rem;
-}
-
-.feature-card-modern h4 {
-    margin: 0.5rem 0;
-    color: #1e293b;
-    font-weight: 600;
-}
-
-.feature-card-modern p {
-    color: #64748b;
-    font-size: 0.875rem;
-}
-
-/* ============ HERO HEADER ============ */
-.hero-header-modern {
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-    border-radius: 28px;
-    padding: 2.5rem;
-    margin-bottom: 2rem;
-    color: white;
-}
-
-.hero-header-modern h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.hero-header-modern p {
-    color: #94a3b8;
-}
-
-/* ============ INFO BOX ============ */
-.info-box-modern {
-    background: #f8fafc;
-    border-radius: 16px;
-    padding: 1.5rem;
-    text-align: center;
-    border: 1px solid #e2e8f0;
-}
-
-/* ============ FOOTER ============ */
-.footer-modern {
-    background: white;
-    border-top: 1px solid #e2e8f0;
-    padding: 2rem 0 1.5rem;
-    margin-top: 3rem;
-    width: 100%;
-}
-
-.footer-modern a {
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.footer-modern a:hover {
-    color: #2563eb !important;
-}
-
-@media (max-width: 768px) {
-    .hero-header-modern {
-        padding: 1.5rem;
-    }
-    .hero-header-modern h1 {
-        font-size: 1.5rem;
-    }
-    .stat-number-modern {
-        font-size: 1.25rem;
-    }
-    .footer-modern {
-        padding: 1.5rem 0 1rem;
-        margin-top: 2rem;
-    }
-    .btn-ghost-header span, .btn-primary-header span {
-        display: none;
-    }
-}
-
-/* ============ NAVBAR STYLES ============ */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding: 1rem 0;
-    border-bottom: 1px solid #e2e8f0;
-    margin-bottom: 1rem;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-}
-
-.logo-icon {
-    width: 45px;
-    height: 45px;
-    background: #1e293b;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo-icon i {
-    font-size: 1.5rem;
-    color: #60a5fa;
-}
-
-.logo-text {
-    font-size: 1.6rem;
-    font-weight: 800;
-    color: #0f172a;
-}
-
-.logo-text span {
-    color: #2563eb;
-}
-
-.nav-buttons {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
-}
-
-.btn-ghost-header {
-    padding: 8px 20px;
-    border-radius: 40px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    border: 1px solid #cbd5e1;
-    background: transparent;
-    color: #334155;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-ghost-header:hover {
-    background: #eff6ff;
-    border-color: #93c5fd;
-}
-
-.btn-primary-header {
-    background: #1e293b;
-    color: white;
-    border: none;
-    padding: 8px 24px;
-    border-radius: 40px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-primary-header:hover {
-    background: #0f172a;
-    transform: translateY(-1px);
-}
-
-/* Footer styles */
-.footer-modern {
-    background: white;
-    border-top: 1px solid #e2e8f0;
-    padding: 2rem 0 1.5rem;
-    margin-top: 3rem;
-    width: 100%;
-}
-
-.footer-modern a {
-    text-decoration: none;
-    transition: color 0.2s ease;
-}
-
-.footer-modern a:hover {
-    color: #2563eb !important;
-}
-
-@media (max-width: 768px) {
-    .btn-ghost-header span, .btn-primary-header span {
-        display: none;
-    }
-    .footer-modern {
-        padding: 1.5rem 0 1rem;
-        margin-top: 2rem;
-    }
-}
-
-/* ============ HERO STYLES - MODRA VERZIJA ============ */
-.hero-container {
-    min-height: calc(100vh - 100px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-}
-
-.hero-content {
-    max-width: 800px;
-    width: 100%;
-    text-align: center;
-}
-
-.hero-badge {
-    margin-bottom: 2rem;
-}
-
-.hero-badge span {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #2563eb;
-    letter-spacing: 2px;
-    background: rgba(37, 99, 235, 0.1);
-    padding: 0.25rem 1rem;
-    border-radius: 20px;
-}
-
-.hero-title {
-    font-size: 4rem;
-    font-weight: 700;
-    color: #0f172a;
-    margin-bottom: 1.25rem;
+    max-width: 1200px !important;
+    min-height: calc(100vh + var(--footer-h));
+    padding: 1.5rem 2rem calc(var(--footer-h) + 1.5rem) !important;
+}
+
+/* ---------- Tipografija ---------- */
+.stApp h1, .stApp h2, .stApp h3, .stApp h4 {
+    font-family: var(--font);
+    color: var(--text);
     letter-spacing: -0.02em;
+    padding: 0;
+}
+.stApp h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.25rem; }
+.stApp h2 { font-size: 1.35rem; font-weight: 600; }
+.stApp h3 { font-size: 1.05rem; font-weight: 600; margin-top: 0.5rem; }
+
+[data-testid="stCaptionContainer"],
+.stApp small {
+    color: var(--text-muted);
+}
+
+hr, [data-testid="stDivider"] hr {
+    border: none !important;
+    border-top: 1px solid var(--border) !important;
+    margin: 1.25rem 0 !important;
+}
+
+a { color: var(--accent); }
+
+/* ---------- Gumbi ---------- */
+.stButton > button,
+.stFormSubmitButton > button,
+.stDownloadButton > button,
+a[data-testid^="stBaseLinkButton"] {
+    font-family: var(--font);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    color: var(--text);
+    box-shadow: none;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.stButton > button p,
+.stFormSubmitButton > button p { margin: 0; color: inherit; }
+
+.stButton > button:hover,
+.stFormSubmitButton > button:hover,
+.stDownloadButton > button:hover,
+a[data-testid^="stBaseLinkButton"]:hover {
+    background: var(--bg-subtle);
+    border-color: var(--text-faint);
+    color: var(--text);
+}
+
+/* Primarni gumbi */
+.stButton > button[kind="primary"],
+.stFormSubmitButton > button[kind="primaryFormSubmit"],
+[data-testid="stBaseButton-primary"],
+[data-testid="stBaseButton-primaryFormSubmit"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+}
+.stButton > button[kind="primary"]:hover,
+.stFormSubmitButton > button[kind="primaryFormSubmit"]:hover,
+[data-testid="stBaseButton-primary"]:hover,
+[data-testid="stBaseButton-primaryFormSubmit"]:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+    color: #ffffff;
+}
+
+.stButton > button:focus-visible,
+.stFormSubmitButton > button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ---------- Vnosna polja ---------- */
+[data-baseweb="input"],
+[data-baseweb="textarea"],
+[data-baseweb="select"] > div {
+    background: var(--bg) !important;
+    border: 1px solid var(--border-strong) !important;
+    border-radius: var(--radius-sm) !important;
+    box-shadow: none !important;
+}
+[data-baseweb="input"] input,
+[data-baseweb="textarea"] textarea {
+    background: transparent !important;
+    color: var(--text) !important;
+    font-family: var(--font);
+}
+[data-baseweb="input"]:focus-within,
+[data-baseweb="textarea"]:focus-within,
+[data-baseweb="select"] > div:focus-within {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+}
+
+/* ---------- Obrazci, razširitve, opozorila ---------- */
+[data-testid="stForm"] {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    background: var(--bg);
+}
+
+[data-testid="stExpander"] { border: none !important; }
+[data-testid="stExpander"] details {
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-sm) !important;
+    background: var(--bg) !important;
+}
+[data-testid="stExpander"] summary { font-weight: 500; }
+
+[data-testid="stAlert"] {
+    background: var(--bg-subtle) !important;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+}
+[data-testid="stAlert"] p { color: var(--text) !important; }
+
+/* ---------- Metrike ---------- */
+[data-testid="stMetric"] {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem 1.25rem;
+    box-shadow: var(--shadow);
+}
+[data-testid="stMetricLabel"] p {
+    color: var(--text-muted) !important;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+[data-testid="stMetricValue"] {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: var(--text);
+}
+/* Delta uporabljamo kot navaden podnaslov, ne kot trend */
+[data-testid="stMetricDelta"],
+[data-testid="stMetricDelta"] * {
+    color: var(--text-faint) !important;
+    font-size: 0.75rem;
+}
+[data-testid="stMetricDelta"] svg { display: none; }
+
+/* ---------- Sidebar ---------- */
+[data-testid="stSidebar"] {
+    background: var(--bg-subtle) !important;
+    border-right: 1px solid var(--border);
+}
+[data-testid="stSidebarNav"] { display: none; }
+[data-testid="stSidebarContent"] { padding-top: 1rem; }
+
+[data-testid="stSidebar"] .stButton > button {
+    width: 100%;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+}
+[data-testid="stSidebar"] .stButton > button:hover {
+    background: #eef2f6;
+    color: var(--text);
+}
+[data-testid="stSidebar"] .stButton > button[kind="primary"],
+[data-testid="stSidebar"] [data-testid="stBaseButton-primary"] {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+}
+[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover,
+[data-testid="stSidebar"] [data-testid="stBaseButton-primary"]:hover {
+    background: var(--accent-border);
+    color: var(--accent);
+}
+
+.st-key-logout_btn button { color: var(--danger) !important; }
+.st-key-logout_btn button:hover { background: var(--danger-soft) !important; }
+
+.sidebar-profile {
+    padding: 0 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.sidebar-avatar {
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+.sidebar-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
     line-height: 1.2;
 }
+.sidebar-email {
+    font-size: 0.75rem;
+    color: var(--text-faint);
+    word-break: break-all;
+}
+.sidebar-section {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-faint);
+    padding: 0.75rem 0.75rem 0.25rem;
+}
+.sidebar-footer {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    padding: 1rem 0.75rem 0;
+}
+.sidebar-empty {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+.sidebar-empty strong { display: block; color: var(--text); margin-bottom: 0.25rem; }
 
-.hero-highlight {
-    color: #2563eb;
+/* ---------- Header ---------- */
+.logo-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    line-height: 40px;
+}
+.logo-text span { color: var(--accent); }
+
+.user-chip { text-align: right; line-height: 1.3; }
+.user-chip .name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.user-chip .email { font-size: 0.75rem; color: var(--text-muted); }
+
+.login-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #ffffff !important;
+    padding: 0.5rem 1.1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none !important;
+    white-space: nowrap;
+    transition: background 0.15s ease;
+}
+.login-btn:hover { background: var(--accent-hover); color: #ffffff !important; }
+
+.header-rule {
+    border-top: 1px solid var(--border);
+    margin: 0.75rem 0 1.5rem;
 }
 
+.st-key-toggle_sidebar_btn button {
+    border: none;
+    background: transparent;
+    font-size: 1.15rem;
+    padding: 0.25rem 0.6rem;
+    color: var(--text-muted);
+}
+.st-key-toggle_sidebar_btn button:hover { background: var(--bg-subtle); }
+
+/* ---------- Hero ---------- */
+.hero {
+    max-width: 720px;
+    min-height: calc(100vh);
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.hero-badge {
+    display: inline-block;
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-border);
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.5rem;
+}
+.hero-title {
+    font-size: 3.25rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--text) !important;
+    margin: 0 0 1rem;
+}
 .hero-description {
-    font-size: 1.25rem;
-    color: #475569;
-    max-width: 600px;
-    margin: 0 auto 3rem auto;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-muted) !important;
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+/* ---------- Pomožni razredi za vsebino ---------- */
+.callout {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+.callout strong { color: var(--text); }
+.callout--accent { background: var(--accent-soft); border-color: var(--accent-border); }
+
+.badge {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+}
+
+.meta { color: var(--text-muted); font-size: 0.85rem; }
+
+.list-item { padding: 0.25rem 0; line-height: 1.5; }
+.list-item strong { font-size: 1rem; font-weight: 600; }
+
+.detail-box {
+    background: var(--bg-subtle);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    font-size: 0.9rem;
     line-height: 1.6;
 }
 
-.hero-actions {
+/* ---------- Footer ---------- */
+.app-footer {
+    position: absolute;
+    left: 2rem;
+    right: 2rem;
+    bottom: 0;
+    box-sizing: border-box;
+    height: var(--footer-h);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
     display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
     flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
+.app-footer .footer-brand { font-weight: 600; color: var(--text); }
+.app-footer .footer-group { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; }
+.app-footer a { color: var(--text-muted); text-decoration: none; }
+.app-footer a:hover { color: var(--accent); }
 
-.hero-btn-primary {
-    background: #2563eb;
-    color: white;
-    border: none;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.hero-btn-primary:hover {
-    background: #1d4ed8;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-}
-
-.hero-btn-secondary {
-    background: transparent;
-    color: #1e293b;
-    border: 1px solid #cbd5e1;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.hero-btn-secondary:hover {
-    background: #f8fafc;
-    border-color: #2563eb;
-    transform: translateY(-2px);
-}
-
-.hero-features {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.hero-features span {
-    font-size: 0.85rem;
-    color: #64748b;
-    font-weight: 500;
-}
-
+/* ---------- Mobilni pogled ---------- */
 @media (max-width: 768px) {
-    .hero-container {
-        padding: 2rem 1rem;
-        min-height: auto;
-    }
-    
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    
-    .hero-description {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .hero-actions {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .hero-btn-primary,
-    .hero-btn-secondary {
-        width: 100%;
-        max-width: 280px;
-        padding: 0.875rem 2rem;
-    }
-    
-    .hero-features {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-    }
+    :root { --footer-h: 8rem; }
+    .block-container { padding: 1rem 1rem calc(var(--footer-h) + 1rem) !important; }
+    .app-footer { left: 1rem; right: 1rem; }
+    .hero { padding: 2rem 0.5rem; min-height: calc(100vh - 8rem); }
+    .hero-title { font-size: 2.1rem; }
+    .hero-description { font-size: 1rem; }
+    .app-footer { flex-direction: column; align-items: flex-start; }
 }
 
-/* Skrij Streamlitov default header */
-.stApp > header {
-    display: none !important;
+/* Gumb User info v headerju */
+.st-key-header_user_info_btn button {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    color: var(--text);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.st-key-header_user_info_btn button:hover {
+    background: var(--bg-subtle);
+    border-color: var(--text-faint);
+    color: var(--text);
 }
 
-/* Dodamo padding na vrhu, da se vsebina ne skriva pod headerjem */
-.main .block-container {
-    padding-top: 1rem !important;
+
+/* Gumb za odpiranje sidebarja (v headerju) */
+.st-key-open_sidebar_btn button {
+    border: none;
+    background: transparent;
+    font-size: 1.15rem;
+    padding: 0.25rem 0.6rem;
+    color: var(--text-muted);
+}
+.st-key-open_sidebar_btn button:hover {
+    background: var(--bg-subtle);
 }
 
-/* Če imamo svoj header, dodamo prostor */
-.app-header {
-    position: relative;
-    z-index: 999;
+/* Gumb za zapiranje sidebarja (v sidebaru) */
+.st-key-close_sidebar_btn button {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    color: var(--text-muted);
+    padding: 0.25rem 0.5rem;
+    margin-top: 0.25rem;
+}
+.st-key-close_sidebar_btn button:hover {
+    background: var(--bg-subtle);
+    color: var(--text);
 }
 
-/* Stil za toggle gumb */
-button[key="toggle_sidebar_btn"] {
-    background: transparent !important;
-    border: none !important;
-    font-size: 1.5rem !important;
-    padding: 0.5rem 0.75rem !important;
+/* Sidebar – odstrani privzeti zgornji padding */
+[data-testid="stSidebarContent"] {
+    padding-top: 0 !important;
+}
+
+[data-testid="stSidebarUserContent"] {
+    padding-top: 0.5rem !important;
+}
+
+/* Sidebar – odstrani privzeti odmik prvega elementa */
+[data-testid="stSidebar"] .block-container,
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Logotip v sidebaru – brez dodatnih odmikov */
+.sidebar-logo {
+    padding: 0;
+    margin: 0;
+    border-bottom: none;
+}
+
+/* Gumb za zapiranje sidebarja */
+.st-key-close_sidebar_btn button {
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    color: var(--text-muted);
+    padding: 0.25rem 0.5rem;
+    margin: 0;
+    line-height: 1;
+}
+.st-key-close_sidebar_btn button:hover {
+    background: var(--bg-subtle);
+    color: var(--text);
+}
+
+/* Zmanjšaj Streamlitov header v sidebaru */
+[data-testid="stSidebarHeader"] {
+    padding: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+}
+
+/* Zmanjšaj prazen prostor za logotip */
+[data-testid="stLogoSpacer"] {
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+}
+
+/* Zmanjšaj gumb za zapiranje */
+[data-testid="stSidebarCollapseButton"] {
+    padding: 0 !important;
     margin: 0 !important;
-    box-shadow: none !important;
-    width: auto !important;
-    min-width: auto !important;
-    border-radius: 8px !important;
 }
 
-button[key="toggle_sidebar_btn"]:hover {
-    background: #f1f5f9 !important;
-    transform: none !important;
+[data-testid="stSidebarCollapseButton"] button {
+    padding: 0.15rem 0.3rem !important;
+    min-height: 0 !important;
+    height: auto !important;
+    font-size: 0.9rem !important;
 }
 
-/* Animacija za sidebar */
+/* Sidebar – gladko odpiranje/zapiranje */
 [data-testid="stSidebar"] {
-    transition: width 0.3s ease-in-out !important;
-    overflow-x: hidden !important;
+    transition: margin-left 0.3s ease, transform 0.3s ease, width 0.3s ease;
+    will-change: margin-left, transform;
+}
+
+/* Ko je sidebar zaprt, ga potisnemo izven zaslona (namesto display: none) */
+[data-testid="stSidebar"][aria-expanded="false"] {
+    margin-left: -300px;
 }

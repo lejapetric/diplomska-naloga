@@ -7,6 +7,4 @@ from views.pages.email_meetings_page import show_email_meetings_page
 from views.pages.upload_page import show_upload_page
 from views.pages.summaries_page import show_summaries_page
 from views.pages.tasks_page import show_tasks_page
-from views.components.sidebar import show_sidebar
-from views.components.header import show_header
-from views.components.footer import show_footer
+from views.pages.user_info import show_user_info  # ← DODANO
