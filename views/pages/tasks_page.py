@@ -4,104 +4,100 @@ from controllers.auth_controller import AuthController
 from controllers.todo_controller import TodoController
 from utils.helpers import format_date
 
+
 def show_tasks_page():
-    st.title("✅ Moje naloge")
-    
     auth = AuthController()
-    
+
     if not auth.is_authenticated():
         st.warning("Za ogled nalog se morate prijaviti")
         return
-    
-    # Refresh gumb
-    col1, col2 = st.columns([3, 1])
-    with col2:
-        if st.button("🔄 Osveži", use_container_width=True):
+
+    head, btn = st.columns([5, 1])
+    with head:
+        st.title("Moje naloge")
+        st.caption("Naloge iz Microsoft To-Do")
+    with btn:
+        st.write("")
+        if st.button("Osveži", use_container_width=True):
             st.cache_data.clear()
             st.rerun()
-    
+
     todo_ctrl = TodoController(auth.get_access_token())
-    
+
     with st.spinner("Nalaganje nalog iz Microsoft To-Do..."):
         tasks = todo_ctrl.get_all_tasks()
-    
-    # Hitro dodajanje naloge
-    st.markdown("### ➕ Hitro dodaj nalogo")
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        quick_task = st.text_input("Nova naloga", placeholder="Vpiši nalogo...", key="quick_task_input")
-    with col2:
-        if st.button("Dodaj", use_container_width=True, key="quick_add_btn"):
-            if quick_task:
-                result = todo_ctrl.add_task_from_meeting(quick_task, "Hitro dodana naloga")
-                if result:
-                    st.success("Naloga dodana!")
-                    st.rerun()
-                else:
-                    st.error("Napaka pri dodajanju")
-    
-    st.markdown("---")
-    
-    if tasks:
-        # Filter
-        filter_option = st.selectbox(
-            "Prikaži",
-            ["Vse naloge", "Aktivne naloge", "Dokončane naloge"]
+
+    # Hitro dodajanje
+    with st.container(border=True):
+        col1, col2 = st.columns([5, 1])
+        with col1:
+            quick_task = st.text_input(
+                "Nova naloga", placeholder="Vpiši nalogo...", key="quick_task_input",
+                label_visibility="collapsed",
+            )
+        with col2:
+            if st.button("Dodaj", use_container_width=True, type="primary", key="quick_add_btn"):
+                if quick_task:
+                    if todo_ctrl.add_task_from_meeting(quick_task, "Hitro dodana naloga"):
+                        st.rerun()
+                    else:
+                        st.error("Napaka pri dodajanju")
+
+    if not tasks:
+        st.write("")
+        st.markdown(
+            '<div class="empty-state">Ni nalog v Microsoft To-Do. Dodajte jih iz sestankov ali ročno zgoraj.</div>',
+            unsafe_allow_html=True,
         )
-        
-        # Razvrsti po listah
-        tasks_by_list = {}
-        for task in tasks:
-            list_name = task.get("list_name", "Ostalo")
+        return
+
+    filter_option = st.radio(
+        "Prikaži",
+        ["Vse naloge", "Aktivne naloge", "Dokončane naloge"],
+        horizontal=True,
+        label_visibility="collapsed",
+    )
+
+    tasks_by_list = {}
+    for task in tasks:
+        status = task.get("status", "notStarted")
+        if filter_option == "Aktivne naloge" and status == "completed":
+            continue
+        if filter_option == "Dokončane naloge" and status != "completed":
+            continue
+        tasks_by_list.setdefault(task.get("list_name", "Ostalo"), []).append(task)
+
+    if not tasks_by_list:
+        st.markdown('<div class="empty-state">Ni nalog za izbrani filter.</div>', unsafe_allow_html=True)
+        return
+
+    for list_name, list_tasks in tasks_by_list.items():
+        st.markdown(f'<div class="section-title">{list_name}</div>', unsafe_allow_html=True)
+
+        for task in list_tasks:
+            title = task.get("title", "Brez naslova")
             status = task.get("status", "notStarted")
-            
-            if filter_option == "Aktivne naloge" and status == "completed":
-                continue
-            if filter_option == "Dokončane naloge" and status != "completed":
-                continue
-            
-            if list_name not in tasks_by_list:
-                tasks_by_list[list_name] = []
-            tasks_by_list[list_name].append(task)
-        
-        for list_name, list_tasks in tasks_by_list.items():
-            st.markdown(f"### 📁 {list_name}")
-            
-            for task in list_tasks:
-                task_title = task.get("title", "Brez naslova")
-                task_status = task.get("status", "notStarted")
-                task_id = task.get("id")
-                list_id = task.get("list_id")
-                due_date = task.get("dueDateTime", {}).get("dateTime", "") if task.get("dueDateTime") else ""
-                body = task.get("body", {}).get("content", "")
-                
-                with st.container():
-                    col1, col2, col3 = st.columns([4, 1, 1])
-                    
-                    with col1:
-                        if task_status == "completed":
-                            st.markdown(f"~~{task_title}~~ ✅")
-                        else:
-                            st.write(task_title)
-                        
-                        if due_date:
-                            st.caption(f"📅 Rok: {format_date(due_date)}")
-                    
-                    with col2:
-                        if task_status != "completed":
-                            if st.button(f"✅ Dokončaj", key=f"complete_{list_id}_{task_id}"):
-                                if todo_ctrl.complete_task(list_id, task_id):
-                                    st.success("Naloga dokončana!")
-                                    st.rerun()
-                    
-                    with col3:
-                        if st.button(f"📄", key=f"detail_{list_id}_{task_id}"):
-                            if body:
-                                st.info(body)
-                            else:
-                                st.info("Ni podrobnosti")
-                    
-                    st.divider()
-    
-    else:
-        st.info("📭 Ni nalog v Microsoft To-Do. Dodajte jih iz sestankov ali ročno zgoraj!")
+            task_id = task.get("id")
+            list_id = task.get("list_id")
+            due_date = task.get("dueDateTime", {}).get("dateTime", "") if task.get("dueDateTime") else ""
+            body = task.get("body", {}).get("content", "")
+            done = status == "completed"
+
+            with st.container(border=True):
+                col_info, col_btn = st.columns([5, 1])
+
+                with col_info:
+                    title_html = f'<span class="task-done">{title}</span>' if done else title
+                    badge = '<span class="badge badge--ok">Dokončano</span>' if done else ""
+                    meta = f'<div class="row-meta">Rok: {format_date(due_date)}</div>' if due_date else ""
+                    st.markdown(f'<div class="row-title">{title_html}{badge}</div>{meta}', unsafe_allow_html=True)
+
+                with col_btn:
+                    if not done:
+                        if st.button("Dokončaj", key=f"complete_{list_id}_{task_id}", use_container_width=True):
+                            if todo_ctrl.complete_task(list_id, task_id):
+                                st.rerun()
+
+                if body:
+                    with st.expander("Podrobnosti"):
+                        st.write(body)

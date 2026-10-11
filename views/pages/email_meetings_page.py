@@ -2,102 +2,104 @@
 import streamlit as st
 from controllers.auth_controller import AuthController
 from controllers.email_controller import EmailController
-from datetime import datetime
+
 
 def show_email_meetings_page():
-    st.title("📧 Samodejno ustvarjanje sestankov iz e-pošte")
-    
+    st.title("E-pošta → sestanek")
+    st.caption("Samodejno ustvarjanje sestankov iz e-pošte")
+
     auth = AuthController()
-    
+
     if not auth.is_authenticated():
         st.warning("Za to funkcijo se morate prijaviti")
         return
-    
-    st.markdown("""
-    <div style="background: #e8f0fe; padding: 1rem; border-radius: 10px; margin-bottom: 1.5rem;">
-        <strong>🤖 Kako deluje:</strong><br>
-        Aplikacija pregleda vašo e-pošto in išče sporočila, ki vsebujejo prošnje za sestanek.
-        Ko zazna takšno sporočilo, vam predlaga ustvarjanje sestanka v Outlook koledarju.
-    </div>
-    """, unsafe_allow_html=True)
-    
+
+    st.markdown(
+        """
+        <div class="callout callout--accent">
+            <strong>Kako deluje</strong><br>
+            Aplikacija pregleda vašo e-pošto in išče sporočila s prošnjo za sestanek.
+            Ko zazna takšno sporočilo, vam predlaga ustvarjanje sestanka v Outlook koledarju.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     email_ctrl = EmailController(auth.get_access_token())
-    
-    # Gumb za iskanje
+
     col1, col2 = st.columns([1, 3])
     with col1:
         limit = st.number_input("Število e-poštnih sporočil", min_value=5, max_value=50, value=20)
-    
     with col2:
-        if st.button("🔍 Poišči zahteve za sestanke", use_container_width=True, type="primary"):
+        st.write("")
+        st.write("")
+        if st.button("Poišči zahteve za sestanke", use_container_width=True, type="primary"):
             with st.spinner("Analiziram e-pošto..."):
-                meeting_requests = email_ctrl.find_meeting_requests(limit)
-                st.session_state.email_meeting_requests = meeting_requests
-                st.rerun()
-    
-    st.markdown("---")
-    
-    # Prikaži najdene zahteve
-    if st.session_state.get("email_meeting_requests"):
-        requests = st.session_state.email_meeting_requests
-        
-        if not requests:
-            st.info("📭 Ni najdenih zahtev za sestanke v zadnjih e-poštnih sporočilih.")
-        else:
-            st.success(f"✅ Najdenih {len(requests)} zahtev za sestanek")
-            
-            for i, req in enumerate(requests):
-                with st.expander(f"📧 {req.get('subject', 'Brez naslova')} - Od: {req.get('sender', 'Neznan')}"):
-                    
-                    # Pokaži zaznane podatke
-                    col1, col2 = st.columns(2)
-                    
-                    with col1:
-                        st.markdown("**📝 Zaznani podatki:**")
-                        st.write(f"📌 **Naslov:** {req.get('meeting_title', 'Sestanek')}")
-                        st.write(f"👤 **Pošiljatelj:** {req.get('sender', 'Neznan')}")
-                        
-                        if req.get('suggested_date'):
-                            st.write(f"📅 **Predlagan datum:** {req['suggested_date'].strftime('%d.%m.%Y')}")
-                        else:
-                            st.write("📅 **Predlagan datum:** Ni zaznan (bo nastavljen na naslednji delovni dan)")
-                        
-                        if req.get('suggested_time'):
-                            st.write(f"⏰ **Predlagana ura:** {req['suggested_time'][0]:02d}:{req['suggested_time'][1]:02d}")
-                        else:
-                            st.write("⏰ **Predlagana ura:** Ni zaznana (bo nastavljena na 10:00)")
-                        
-                        st.write(f"⏱️ **Predlagano trajanje:** {req.get('suggested_duration', 60)} minut")
-                        st.write(f"📍 **Lokacija:** {req.get('suggested_location', 'Microsoft Teams')}")
-                    
-                    with col2:
-                        st.markdown("**👥 Udeleženci:**")
-                        for attendee in req.get('additional_attendees', []):
-                            st.write(f"- {attendee}")
-                    
-                    # Originalno sporočilo
-                    with st.expander("📄 Prikaži originalno sporočilo"):
-                        st.text(req.get('original_body', 'Ni vsebine')[:1000])
-                    
-                    # Gumb za ustvarjanje sestanka
-                    if st.button(f"✅ Ustvari sestanek", key=f"create_meeting_{i}", type="primary"):
-                        user_info = auth.get_user_info()
-                        user_email = user_info.get('mail', user_info.get('userPrincipalName', ''))
-                        
-                        with st.spinner("Ustvarjam sestanek v Outlooku..."):
-                            result = email_ctrl.create_meeting_from_email(req, user_email)
-                            
-                            if result["success"]:
-                                st.success(f"✅ Sestanek '{result['title']}' uspešno ustvarjen!")
-                                st.info(f"📅 Datum: {result['date'].strftime('%d.%m.%Y ob %H:%M')}")
-                                st.info(f"👥 Udeleženci: {', '.join(result['attendees'])}")
-                                st.balloons()
-                                
-                                # Odstrani ta request iz seznama
-                                st.session_state.email_meeting_requests.pop(i)
-                                st.rerun()
-                            else:
-                                st.error(f"❌ Napaka: {result.get('error', 'Neznana napaka')}")
-    
-    else:
-        st.info("🔍 Kliknite 'Poišči zahteve za sestanke' za pregled e-pošte.")
+                st.session_state.email_meeting_requests = email_ctrl.find_meeting_requests(limit)
+            st.rerun()
+
+    if "email_meeting_requests" not in st.session_state:
+        st.markdown(
+            '<div class="empty-state">Kliknite "Poišči zahteve za sestanke" za pregled e-pošte.</div>',
+            unsafe_allow_html=True,
+        )
+        return
+
+    meeting_requests = st.session_state.email_meeting_requests
+
+    if not meeting_requests:
+        st.markdown(
+            '<div class="empty-state">V zadnjih e-poštnih sporočilih ni zahtev za sestanke.</div>',
+            unsafe_allow_html=True,
+        )
+        return
+
+    st.markdown(
+        f'<div class="section-title">Najdenih {len(meeting_requests)} zahtev</div>',
+        unsafe_allow_html=True,
+    )
+
+    for i, req in enumerate(meeting_requests):
+        with st.expander(f"{req.get('subject', 'Brez naslova')} · {req.get('sender', 'Neznan')}"):
+            col1, col2 = st.columns(2)
+
+            with col1:
+                suggested_date = req.get("suggested_date")
+                suggested_time = req.get("suggested_time")
+                date_txt = suggested_date.strftime("%d.%m.%Y") if suggested_date else "Ni zaznan (naslednji delovni dan)"
+                time_txt = f"{suggested_time[0]:02d}:{suggested_time[1]:02d}" if suggested_time else "Ni zaznana (10:00)"
+
+                st.markdown(
+                    f"""
+                    <div class="row-meta">Naslov</div><div>{req.get('meeting_title', 'Sestanek')}</div>
+                    <div class="row-meta" style="margin-top:.6rem">Pošiljatelj</div><div>{req.get('sender', 'Neznan')}</div>
+                    <div class="row-meta" style="margin-top:.6rem">Datum</div><div>{date_txt}</div>
+                    <div class="row-meta" style="margin-top:.6rem">Ura</div><div>{time_txt}</div>
+                    <div class="row-meta" style="margin-top:.6rem">Trajanje</div><div>{req.get('suggested_duration', 60)} minut</div>
+                    <div class="row-meta" style="margin-top:.6rem">Lokacija</div><div>{req.get('suggested_location', 'Microsoft Teams')}</div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+            with col2:
+                st.markdown('<div class="row-meta">Udeleženci</div>', unsafe_allow_html=True)
+                for attendee in req.get("additional_attendees", []):
+                    st.markdown(f"- {attendee}")
+
+            # Streamlit ne dovoli expanderja znotraj expanderja
+            st.markdown('<div class="row-meta" style="margin-top:.6rem">Originalno sporočilo</div>', unsafe_allow_html=True)
+            st.text(req.get("original_body", "Ni vsebine")[:1000])
+
+            if st.button("Ustvari sestanek", key=f"create_meeting_{i}", type="primary"):
+                user_info = auth.get_user_info()
+                user_email = user_info.get("mail", user_info.get("userPrincipalName", ""))
+
+                with st.spinner("Ustvarjam sestanek v Outlooku..."):
+                    result = email_ctrl.create_meeting_from_email(req, user_email)
+
+                if result["success"]:
+                    st.success(f"Sestanek '{result['title']}' je ustvarjen ({result['date'].strftime('%d.%m.%Y ob %H:%M')}).")
+                    st.session_state.email_meeting_requests.pop(i)
+                    st.rerun()
+                else:
+                    st.error(f"Napaka: {result.get('error', 'Neznana napaka')}")

@@ -63,12 +63,17 @@ footer {
 /* Glavni del (header + vsebina) zapolni celoten zaslon.
    Footer je pozicioniran na dnu kontejnerja, ki je za višino footerja
    višji od zaslona - viden je šele, ko se pomakneš navzdol. */
-.block-container {
-    position: relative;
-    box-sizing: border-box;
-    max-width: 1200px !important;
-    min-height: calc(100vh + var(--footer-h));
-    padding: 1.5rem 2rem calc(var(--footer-h) + 1.5rem) !important;
+.app-footer {
+    margin-top: 3rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem 2rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
 }
 
 /* ---------- Tipografija ---------- */
@@ -328,7 +333,7 @@ a[data-testid^="stBaseLinkButton"]:hover {
     border-radius: var(--radius-sm);
     font-size: 0.875rem;
     font-weight: 500;
-    text-decoration: none !important;
+    text-decoration: none;
     white-space: nowrap;
     transition: background 0.15s ease;
 }
@@ -351,7 +356,7 @@ a[data-testid^="stBaseLinkButton"]:hover {
 /* ---------- Hero ---------- */
 .hero {
     max-width: 720px;
-    min-height: calc(100vh);
+    min-height: calc(100vh - 9rem); /* 100vh minus header in padding */
     margin: 0 auto;
     padding: 2rem 1rem;
     display: flex;
@@ -425,14 +430,45 @@ a[data-testid^="stBaseLinkButton"]:hover {
     line-height: 1.6;
 }
 
+/* ---------- Strani: kartice, vrstice, prazna stanja ---------- */
+/* st.container(border=True) = kartica */
+[data-testid="stVerticalBlockBorderWrapper"] {
+    border-color: var(--border) !important;
+    border-radius: var(--radius) !important;
+}
+
+.section-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    margin: 2rem 0 0.75rem;
+}
+
+.card-title { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+.card-text { font-size: 0.85rem; color: var(--text-muted); margin: 0.15rem 0 0.75rem; }
+
+.row-title { font-size: 0.95rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+.row-meta { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+.row-title .badge { margin-left: 0.5rem; vertical-align: middle; }
+
+.badge--muted { background: var(--bg-subtle); color: var(--text-muted); border: 1px solid var(--border); }
+.badge--ok { background: #f0fdf4; color: #15803d; }
+
+.task-done { color: var(--text-faint); text-decoration: line-through; }
+
+.empty-state {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
 /* ---------- Footer ---------- */
 .app-footer {
-    position: absolute;
-    left: 2rem;
-    right: 2rem;
-    bottom: 0;
-    box-sizing: border-box;
-    height: var(--footer-h);
+    margin-top: 3rem;
     padding-top: 1.25rem;
     border-top: 1px solid var(--border);
     display: flex;
@@ -450,132 +486,33 @@ a[data-testid^="stBaseLinkButton"]:hover {
 
 /* ---------- Mobilni pogled ---------- */
 @media (max-width: 768px) {
-    :root { --footer-h: 8rem; }
-    .block-container { padding: 1rem 1rem calc(var(--footer-h) + 1rem) !important; }
-    .app-footer { left: 1rem; right: 1rem; }
+    /* :root { --footer-h: 8rem; } ← ni več potrebno */
+    .block-container { padding: 1rem 1rem 1rem !important; }
+    /* .app-footer { left: 1rem; right: 1rem; } ← ni več potrebno */
     .hero { padding: 2rem 0.5rem; min-height: calc(100vh - 8rem); }
     .hero-title { font-size: 2.1rem; }
     .hero-description { font-size: 1rem; }
     .app-footer { flex-direction: column; align-items: flex-start; }
 }
 
-/* Gumb User info v headerju */
-.st-key-header_user_info_btn button {
-    width: 100%;
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--border-strong);
-    background: var(--bg);
-    color: var(--text);
-    border-radius: var(--radius-sm);
-    font-size: 0.875rem;
-    font-weight: 500;
-    white-space: nowrap;
-}
-.st-key-header_user_info_btn button:hover {
-    background: var(--bg-subtle);
-    border-color: var(--text-faint);
-    color: var(--text);
+[data-testid="stAppViewContainer"] {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-
-/* Gumb za odpiranje sidebarja (v headerju) */
-.st-key-open_sidebar_btn button {
-    border: none;
-    background: transparent;
-    font-size: 1.15rem;
-    padding: 0.25rem 0.6rem;
-    color: var(--text-muted);
-}
-.st-key-open_sidebar_btn button:hover {
-    background: var(--bg-subtle);
+[data-testid="stMain"] {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Gumb za zapiranje sidebarja (v sidebaru) */
-.st-key-close_sidebar_btn button {
-    border: none;
-    background: transparent;
-    font-size: 1rem;
-    color: var(--text-muted);
-    padding: 0.25rem 0.5rem;
-    margin-top: 0.25rem;
-}
-.st-key-close_sidebar_btn button:hover {
-    background: var(--bg-subtle);
-    color: var(--text);
+[data-testid="stMain"] .block-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Sidebar – odstrani privzeti zgornji padding */
-[data-testid="stSidebarContent"] {
-    padding-top: 0 !important;
-}
-
-[data-testid="stSidebarUserContent"] {
-    padding-top: 0.5rem !important;
-}
-
-/* Sidebar – odstrani privzeti odmik prvega elementa */
-[data-testid="stSidebar"] .block-container,
-[data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
-    padding-top: 0 !important;
-    margin-top: 0 !important;
-}
-
-/* Logotip v sidebaru – brez dodatnih odmikov */
-.sidebar-logo {
-    padding: 0;
-    margin: 0;
-    border-bottom: none;
-}
-
-/* Gumb za zapiranje sidebarja */
-.st-key-close_sidebar_btn button {
-    border: none;
-    background: transparent;
-    font-size: 1rem;
-    color: var(--text-muted);
-    padding: 0.25rem 0.5rem;
-    margin: 0;
-    line-height: 1;
-}
-.st-key-close_sidebar_btn button:hover {
-    background: var(--bg-subtle);
-    color: var(--text);
-}
-
-/* Zmanjšaj Streamlitov header v sidebaru */
-[data-testid="stSidebarHeader"] {
-    padding: 0 !important;
-    min-height: 0 !important;
-    height: auto !important;
-}
-
-/* Zmanjšaj prazen prostor za logotip */
-[data-testid="stLogoSpacer"] {
-    height: 0 !important;
-    min-height: 0 !important;
-    padding: 0 !important;
-}
-
-/* Zmanjšaj gumb za zapiranje */
-[data-testid="stSidebarCollapseButton"] {
-    padding: 0 !important;
-    margin: 0 !important;
-}
-
-[data-testid="stSidebarCollapseButton"] button {
-    padding: 0.15rem 0.3rem !important;
-    min-height: 0 !important;
-    height: auto !important;
-    font-size: 0.9rem !important;
-}
-
-/* Sidebar – gladko odpiranje/zapiranje */
-[data-testid="stSidebar"] {
-    transition: margin-left 0.3s ease, transform 0.3s ease, width 0.3s ease;
-    will-change: margin-left, transform;
-}
-
-/* Ko je sidebar zaprt, ga potisnemo izven zaslona (namesto display: none) */
-[data-testid="stSidebar"][aria-expanded="false"] {
-    margin-left: -300px;
+.app-footer {
+    margin-top: auto; /* potisne footer na dno */
 }
