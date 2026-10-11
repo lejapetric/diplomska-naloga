@@ -1,0 +1,106 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+
+# Streamlit
+.streamlit/secrets.toml
+.streamlit/config.toml
+
+# Environment variables (ključi in gesla!)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Database (lokalna baza)
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploaded files (ne shranjujemo v git)
+uploads/
+temp/
+*.mp3
+*.wav
+*.txt
+*.vtt
+temp_*
+
+# Logs
+*.log
+logs/
+error_log/
+
+# OpenAI / API ključi (varnost!)
+openai_key.txt
+api_keys.txt
+secrets.txt
+
+# Jupyter Notebook (če uporabljate)
+.ipynb_checkpoints/
+*.ipynb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Package management
+pip-log.txt
+pip-delete-this-directory.txt
+pip-selfcheck.json
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Streamlit runtime
+.streamlit/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Node (če slučajno)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Docker (če boste kdaj)
+.docker/
+docker-compose.override.yml
+
+# Certificates
+*.pem
+*.crt
+*.key
+*.p12
+
+# Secrets in credentials
+credentials.json
+token.pickle
+token.json
+msal_cache.bin
+
+# Local configuration
+config.local.py
+settings.local.py

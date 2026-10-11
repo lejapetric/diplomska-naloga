@@ -1,0 +1,7 @@
+# controllers/__init__.py
+from controllers.auth_controller import AuthController
+from controllers.calendar_controller import CalendarController
+from controllers.onenote_controller import OneNoteController
+from controllers.ai_controller import AIController
+from controllers.todo_controller import TodoController
+from controllers.teams_controller import TeamsController

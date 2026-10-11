@@ -1,0 +1,855 @@
+/* static/style.css - Meeting Assistant Modern Theme */
+
+html, body, .stApp, [data-testid="stAppViewContainer"], 
+[data-testid="stMain"], .main, .block-container {
+    background-color: #ffffff !important;
+}
+
+/* Popolnoma skrij vse Streamlitove gumbe in headere */
+.stAppDeployButton, 
+.stToolbar, 
+.stMainBlockHeader,
+[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="stStatusWidget"],
+[data-testid="stSidebarCollapseButton"],
+button[data-testid="baseButton-header"],
+button[kind="header"],
+button[aria-label="Menu"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+}
+
+/* Odstrani ves padding na vrhu */
+.main .block-container {
+    padding-top: 0 !important;
+}
+
+/* Sidebar naj bo čisto na vrhu */
+[data-testid="stSidebar"] {
+    top: 0 !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Glavna vsebina */
+.stApp {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Skrij footer v sidebarju */
+[data-testid="stSidebar"] .st-emotion-cache-1v3caue {
+    display: none !important;
+}
+
+/* Odstrani Streamlitov default padding in margin */
+.stApp {
+    margin-top: -2rem !important;
+    padding-top: 0 !important;
+}
+
+.stApp > header {
+    background: transparent !important;
+}
+
+.stApp > header:first-child {
+    display: none !important;
+}
+
+.block-container {
+    padding-top: 1rem !important;
+    padding-bottom: 2rem !important;
+    max-width: 1440px !important;
+}
+
+.stMarkdown, .stElementContainer, .st-emotion-cache-1r6slb0 {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    line-height: 1.5;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+/* Background gradient */
+.bg-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.05) 0%, rgba(0, 0, 0, 0) 50%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.03) 0%, rgba(0, 0, 0, 0) 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Modern Buttons */
+.stButton > button {
+    background: #1e293b;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.stButton > button:hover {
+    background: #0f172a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Professional Cards */
+.card-modern {
+    background: white;
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+    height: 100%;
+}
+
+.card-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Stats Cards */
+.stat-card-modern {
+    background: white;
+    border-radius: 20px;
+    padding: 1.25rem;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.stat-card-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card-modern i {
+    font-size: 2rem;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+}
+
+.stat-number-modern {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.stat-label-modern {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+/* Hero Header */
+.hero-header-modern {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 28px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.hero-header-modern h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.hero-header-modern p {
+    color: #94a3b8;
+}
+
+/* Feature Cards */
+.feature-card-modern {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.feature-card-modern:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card-modern .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.feature-card-modern h4 {
+    margin: 0.5rem 0;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.feature-card-modern p {
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+/* Info Box */
+.info-box-modern {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+/* Tables */
+.table-modern {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.table-modern th {
+    text-align: left;
+    padding: 1rem;
+    background: #f8fafc;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #64748b;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.table-modern td {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 0.875rem;
+    color: #334155;
+}
+
+.table-modern tr:hover {
+    background: #fef2f2;
+}
+
+/* Form Elements */
+.form-input-modern {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.form-input-modern:focus {
+    outline: none;
+    border-color: #1e293b;
+    box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.1);
+}
+
+/* Status Badges */
+.status-badge-modern {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Footer */
+.footer-modern {
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 2rem 0 1.5rem;
+    margin-top: 3rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-header-modern {
+        padding: 1.5rem;
+    }
+    
+    .hero-header-modern h1 {
+        font-size: 1.5rem;
+    }
+    
+    .stat-number-modern {
+        font-size: 1.25rem;
+    }
+}
+
+.footer-modern {
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 2rem 0 1.5rem;
+    margin-top: 3rem;
+    width: 100%;
+}
+
+.footer-modern a {
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-modern a:hover {
+    color: #2563eb !important;
+}
+
+@media (max-width: 768px) {
+    .footer-modern {
+        padding: 1.5rem 0 1rem;
+        margin-top: 2rem;
+    }
+}
+
+/* ============ HEADER STYLES ============ */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    background: #1e293b;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon i {
+    font-size: 1.5rem;
+    color: #60a5fa;
+}
+
+.logo-text {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.logo-text span {
+    color: #2563eb;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.btn-ghost-header {
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: 1px solid #cbd5e1;
+    background: transparent;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-ghost-header:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+}
+
+.btn-primary-header {
+    background: #1e293b;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary-header:hover {
+    background: #0f172a;
+    transform: translateY(-1px);
+}
+
+/* ============ CARD STYLES ============ */
+.panel, .card-modern {
+    background: white;
+    border-radius: 24px;
+    padding: 1.5rem;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.panel:hover, .card-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ============ STATS CARDS ============ */
+.stat-card-modern {
+    background: white;
+    border-radius: 20px;
+    padding: 1.25rem;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.stat-card-modern:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card-modern i {
+    font-size: 2rem;
+    color: #2563eb;
+    margin-bottom: 0.5rem;
+}
+
+.stat-number-modern {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.stat-label-modern {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 0.25rem;
+}
+
+/* ============ FEATURE CARDS ============ */
+.feature-card-modern {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.feature-card-modern:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card-modern .feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.feature-card-modern h4 {
+    margin: 0.5rem 0;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.feature-card-modern p {
+    color: #64748b;
+    font-size: 0.875rem;
+}
+
+/* ============ HERO HEADER ============ */
+.hero-header-modern {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 28px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    color: white;
+}
+
+.hero-header-modern h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.hero-header-modern p {
+    color: #94a3b8;
+}
+
+/* ============ INFO BOX ============ */
+.info-box-modern {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+/* ============ FOOTER ============ */
+.footer-modern {
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 2rem 0 1.5rem;
+    margin-top: 3rem;
+    width: 100%;
+}
+
+.footer-modern a {
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-modern a:hover {
+    color: #2563eb !important;
+}
+
+@media (max-width: 768px) {
+    .hero-header-modern {
+        padding: 1.5rem;
+    }
+    .hero-header-modern h1 {
+        font-size: 1.5rem;
+    }
+    .stat-number-modern {
+        font-size: 1.25rem;
+    }
+    .footer-modern {
+        padding: 1.5rem 0 1rem;
+        margin-top: 2rem;
+    }
+    .btn-ghost-header span, .btn-primary-header span {
+        display: none;
+    }
+}
+
+/* ============ NAVBAR STYLES ============ */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.logo-icon {
+    width: 45px;
+    height: 45px;
+    background: #1e293b;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon i {
+    font-size: 1.5rem;
+    color: #60a5fa;
+}
+
+.logo-text {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0f172a;
+}
+
+.logo-text span {
+    color: #2563eb;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.btn-ghost-header {
+    padding: 8px 20px;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    border: 1px solid #cbd5e1;
+    background: transparent;
+    color: #334155;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-ghost-header:hover {
+    background: #eff6ff;
+    border-color: #93c5fd;
+}
+
+.btn-primary-header {
+    background: #1e293b;
+    color: white;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 40px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary-header:hover {
+    background: #0f172a;
+    transform: translateY(-1px);
+}
+
+/* Footer styles */
+.footer-modern {
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 2rem 0 1.5rem;
+    margin-top: 3rem;
+    width: 100%;
+}
+
+.footer-modern a {
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-modern a:hover {
+    color: #2563eb !important;
+}
+
+@media (max-width: 768px) {
+    .btn-ghost-header span, .btn-primary-header span {
+        display: none;
+    }
+    .footer-modern {
+        padding: 1.5rem 0 1rem;
+        margin-top: 2rem;
+    }
+}
+
+/* ============ HERO STYLES - MODRA VERZIJA ============ */
+.hero-container {
+    min-height: calc(100vh - 100px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.hero-content {
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+}
+
+.hero-badge {
+    margin-bottom: 2rem;
+}
+
+.hero-badge span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #2563eb;
+    letter-spacing: 2px;
+    background: rgba(37, 99, 235, 0.1);
+    padding: 0.25rem 1rem;
+    border-radius: 20px;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.hero-highlight {
+    color: #2563eb;
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    line-height: 1.6;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.hero-btn-primary {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.hero-btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+}
+
+.hero-btn-secondary {
+    background: transparent;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.hero-btn-secondary:hover {
+    background: #f8fafc;
+    border-color: #2563eb;
+    transform: translateY(-2px);
+}
+
+.hero-features {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.hero-features span {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .hero-container {
+        padding: 2rem 1rem;
+        min-height: auto;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-btn-primary,
+    .hero-btn-secondary {
+        width: 100%;
+        max-width: 280px;
+        padding: 0.875rem 2rem;
+    }
+    
+    .hero-features {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}
+
+/* Skrij Streamlitov default header */
+.stApp > header {
+    display: none !important;
+}
+
+/* Dodamo padding na vrhu, da se vsebina ne skriva pod headerjem */
+.main .block-container {
+    padding-top: 1rem !important;
+}
+
+/* Če imamo svoj header, dodamo prostor */
+.app-header {
+    position: relative;
+    z-index: 999;
+}
+
+/* Stil za toggle gumb */
+button[key="toggle_sidebar_btn"] {
+    background: transparent !important;
+    border: none !important;
+    font-size: 1.5rem !important;
+    padding: 0.5rem 0.75rem !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    width: auto !important;
+    min-width: auto !important;
+    border-radius: 8px !important;
+}
+
+button[key="toggle_sidebar_btn"]:hover {
+    background: #f1f5f9 !important;
+    transform: none !important;
+}
+
+/* Animacija za sidebar */
+[data-testid="stSidebar"] {
+    transition: width 0.3s ease-in-out !important;
+    overflow-x: hidden !important;
+}
